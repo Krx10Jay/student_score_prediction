@@ -5,6 +5,7 @@ import webbrowser
 
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.prediction_pipeline import CustomData,PredictPipeline
+from src.logger import logging
 
 application=Flask(__name__)
 
@@ -30,7 +31,7 @@ def predict_datapoint():
             reading_score=float(request.form.get('writing_score')),
             writing_score=float(request.form.get('reading_score'))
         )
-        pred_df=data.get_data_as_data_frame()
+        pred_df = data.get_data_as_data_frame()
         print(pred_df)
         print("Before Prediction")
 
@@ -38,6 +39,8 @@ def predict_datapoint():
         print("Mid Prediction")
         results=predict_pipeline.predict(pred_df)
         print("after Prediction")
+        logging.info("after Prediction")
+        
         return render_template('home.html',results=results[0])
     
 
